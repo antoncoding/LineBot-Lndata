@@ -12,8 +12,8 @@ var bot = linebot({
 
 bot.on('message', function (event) {
   console.log('## Message From: ', event.source.userId);
-  bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!');
-  switch (event.message.type) {
+  bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!').then(
+    switch (event.message.type) {
         case 'text':
             console.log('## Message: ', event.message.text)
             switch (event.message.text) {
@@ -75,7 +75,7 @@ bot.on('message', function (event) {
         default:
             event.reply('Unknow message: ' + JSON.stringify(event));
             break;
-    }
+    })
 });
 
 const app = express();
