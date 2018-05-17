@@ -13,7 +13,8 @@ var bot = linebot({
 
 bot.on('message', function (event) {
   console.log('## Message From: ', event.source.userId);
-  console.log('## Message TEXT: ', event.message.text);
+  bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!');
+  // console.log('## Message TEXT: ', event.message.text);
   // event.reply(event.message.text).then(function (data) {
   //   console.log('Success', data);
   // }).catch(function (error) {
