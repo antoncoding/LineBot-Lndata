@@ -1,6 +1,4 @@
-// for initial webhook verification
 var linebot = require('linebot');
-
 var express = require('express');
 
 var bot = linebot({
@@ -12,8 +10,10 @@ var bot = linebot({
 // bot.on('message', function(event) {
 //   console.log(event); //把收到訊息的 event 印出來看看
 // });
+
 bot.on('message', function (event) {
-  console.log(event);
+  console.log('## Message From: ', event.source.userId);
+  console.log('## Message TEXT: ', event.message.text);
   // event.reply(event.message.text).then(function (data) {
   //   console.log('Success', data);
   // }).catch(function (error) {
