@@ -10,13 +10,9 @@ var bot = linebot({
 
 });
 
-// bot.on('message', function(event) {
-//   console.log(event); //把收到訊息的 event 印出來看看
-// });
-
 bot.on('message', function (event) {
   console.log('## Message From: ', event.source.userId);
-  // bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!');
+  bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!');
   switch (event.message.type) {
         case 'text':
             console.log('## Message: ', event.message.text)
@@ -41,9 +37,9 @@ bot.on('message', function (event) {
                         previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
                     });
                     break;
-                case 'Push':
-                    bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0', 'Push to group');
-                    break;
+                // case 'Push':
+                    // bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0', 'Push to group');
+                    // break;
                 default:
                     console.log('卍卍卍卍 不知道要幹麻 卍卍卍卍');
             }
