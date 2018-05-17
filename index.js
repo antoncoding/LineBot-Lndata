@@ -1,30 +1,89 @@
-const linebot = require('linebot');
-const express = require('express');
+var linebot = require('linebot');
+var express = require('express');
 const bodyParser = require('body-parser');
 
-const bot = linebot({
-  channelId: process.env.CHANNEL_ID,
-  channelSecret: process.env.CHANNEL_SECRET,
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+var bot = linebot({
+  channelId: process.env.Line_Channel_ID,
+  channelSecret: process.env.Line_Channel_Secret,
+  channelAccessToken: process.env.Line_Channel_Access_Token,
+  verify: true
+
 });
 
-const app = bot.parser();
-
-// app.get('/',function(req,res) {
-//    res.send("hello world!");
-//  })
-
-app.post('/webhook', linebotparser);
+// bot.on('message', function(event) {
+//   console.log(event); //把收到訊息的 event 印出來看看
+// });
 
 bot.on('message', function (event) {
-  console.log(event.message.text);
-  event.reply(event.message.text).then(function (data) {
-    console.log('Success', data);
-  }).catch(function (error) {
-    console.log('Error', error);
-  });
+  console.log('## Message From: ', event.source.userId);
+  // bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!');
+  switch (event.message.type) {
+        case 'text':
+            switch (event.message.text) {
+                case 'Me':
+                    event.source.profile().then(function (profile) {
+                        return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
+                    });
+                    break;
+                case 'Group':
+                    return event.reply(event.source.groupId);
+                    break;
+                case 'Member':
+                    event.source.member().then(function (member) {
+                        return event.reply(JSON.stringify(member));
+                    });
+                    break;
+                case 'Picture':
+                    event.reply({
+                        type: 'image',
+                        originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
+                        previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
+                    });
+                    break;
+                default:
+                    console.log('This is default')
+            }
+            break;
+        case 'image':
+            event.source.profile().then(function (profile) {
+                event.message.content().then(function (data) {
+                    const s = data.toString('hex').substring(0, 32);
+                    return event.reply('哇!快來看 ' + profile.displayName + ' 上傳了好棒的照片耶~');
+                }).catch(function (err) {
+                    return event.reply(err.toString());
+                });
+            });
+            break;
+        case 'video':
+            event.source.profile().then(function (profile) {
+                return event.reply('哇!快來看 ' + profile.displayName + ' 上傳了好棒的影片耶~');
+            });
+            break;
+        case 'audio':
+            event.reply('Nice audio!');
+            break;
+        case 'location':
+            event.reply(['That\'s a good location!', 'Lat:' + event.message.latitude, 'Long:' + event.message.longitude]);
+            break;
+        case 'sticker':
+            /*event.reply({
+              type: 'sticker',
+              packageId: 1,
+              stickerId: 1
+            });*/
+            break;
+        default:
+            event.reply('Unknow message: ' + JSON.stringify(event));
+            break;
+    }
 });
 
-app.listen(process.env.PORT || 80, function () {
-  console.log('LineBot is running.');
+const app = express();
+const linebotParser = bot.parser();
+app.post('/webhook', linebotParser);
+
+// Change port on Heroku
+var server = app.listen(process.env.PORT || 8080, function() {
+  var port = server.address().port;
+  console.log("App now running on port", port);
 });
