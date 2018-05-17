@@ -19,6 +19,7 @@ bot.on('message', function (event) {
   // bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0','Now you see me!');
   switch (event.message.type) {
         case 'text':
+            console.log('## Message: ', event.message.text)
             switch (event.message.text) {
                 case 'Me':
                     event.source.profile().then(function (profile) {
@@ -40,8 +41,11 @@ bot.on('message', function (event) {
                         previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
                     });
                     break;
+                case 'Push':
+                    bot.push('U6d38c978c5bdd2c68ec3d8dd6f1638a0', 'Push to group');
+                    break;
                 default:
-                    console.log('This is default')
+                    console.log('卍卍卍卍 不知道要幹麻 卍卍卍卍');
             }
             break;
         case 'image':
@@ -66,11 +70,11 @@ bot.on('message', function (event) {
             event.reply(['That\'s a good location!', 'Lat:' + event.message.latitude, 'Long:' + event.message.longitude]);
             break;
         case 'sticker':
-            /*event.reply({
+            event.reply({
               type: 'sticker',
               packageId: 1,
               stickerId: 1
-            });*/
+            });
             break;
         default:
             event.reply('Unknow message: ' + JSON.stringify(event));
