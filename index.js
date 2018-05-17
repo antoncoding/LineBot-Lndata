@@ -48,7 +48,7 @@ bot.on('message', function (event) {
             event.source.profile().then(function (profile) {
                 event.message.content().then(function (data) {
                     const s = data.toString('hex').substring(0, 32);
-                    return event.reply('哇!快來看 ' + profile.displayName + ' 上傳了好棒的照片耶~');
+                    return event.reply('好圖推推');
                 }).catch(function (err) {
                     return event.reply(err.toString());
                 });
