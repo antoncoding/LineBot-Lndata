@@ -1,0 +1,16 @@
+{
+  "name": "lndataline",
+  "version": "1.0.0",
+  "description": "Warning Char",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "author": "antoncoding",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "linebot": "^1.4.1"
+  }
+}
