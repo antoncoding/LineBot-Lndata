@@ -56,7 +56,7 @@ bot.on('message', function (event) {
             break;
         case 'video':
             event.source.profile().then(function (profile) {
-                return event.reply('哇!快來看 ' + profile.displayName + ' 上傳了好棒的影片耶~');
+                return event.reply('謝謝你的影片zz');
             });
             break;
         case 'audio':
